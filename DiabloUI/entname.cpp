@@ -8,23 +8,23 @@ LRESULT __stdcall EntName_WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 	HWND v9; // eax
 
 	v4 = 2;
-	if (Msg == 2) {
+	if (Msg == WM_DESTROY) {
 		EntName_DelEntNameMsgs(hWnd);
 		return (LRESULT)SDlgDefDialogProc(hWnd, Msg, (HDC)wParam, (HWND)lParam);
 	}
-	if (Msg <= 0x103)
+	if (Msg <= WM_DEADCHAR)
 		return (LRESULT)SDlgDefDialogProc(hWnd, Msg, (HDC)wParam, (HWND)lParam);
-	if (Msg <= 0x105) {
+	if (Msg <= WM_SYSKEYUP) {
 		v9 = (HWND)SDrawGetFrameWindow(NULL);
 		SendMessageA(v9, Msg, wParam, lParam);
 		return (LRESULT)SDlgDefDialogProc(hWnd, Msg, (HDC)wParam, (HWND)lParam);
 	}
 	switch (Msg) {
-	case 0x110u:
+	case WM_INITDIALOG:
 		entname_charname = (char *)lParam;
 		EntName_LoadFocusChkName(hWnd);
 		return 0;
-	case 0x111u:
+	case WM_COMMAND:
 		if ((unsigned short)wParam != 1) {
 			if ((unsigned short)wParam != 2) {
 				if ((unsigned short)wParam == 1065)
@@ -34,12 +34,12 @@ LRESULT __stdcall EntName_WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			goto LABEL_11;
 		}
 		goto LABEL_18;
-	case 0x113u:
+	case WM_TIMER:
 		v7 = GetFocus();
 		Focus_DoBlitSpinIncFrame(hWnd, v7);
 		return 0;
 	}
-	if (Msg != 513)
+	if (Msg != WM_LBUTTONDOWN)
 		return (LRESULT)SDlgDefDialogProc(hWnd, Msg, (HDC)wParam, (HWND)lParam);
 	v5 = GetDlgItem(hWnd, 1056);
 	if (local_GetBottomRect(hWnd, v5, (unsigned short)lParam, (unsigned int)lParam >> 16)) {
